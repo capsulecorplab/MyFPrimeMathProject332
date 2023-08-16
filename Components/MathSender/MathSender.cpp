@@ -38,7 +38,8 @@ namespace MathModule {
         F32 result
     )
   {
-    // TODO
+      this->tlmWrite_RESULT(result);
+      this->log_ACTIVITY_HI_RESULT(result);
   }
 
   // ----------------------------------------------------------------------
