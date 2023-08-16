@@ -110,4 +110,24 @@ namespace MathModule {
       this->cmdResponse_out(opCode, cmdSeq, Fw::CmdResponse::OK);
   }
 
+  void MathReceiver ::
+    parameterUpdated(FwPrmIdType id)
+  {
+      switch (id) {
+          case PARAMID_FACTOR: {
+              Fw::ParamValid valid;
+              F32 val = this->paramGet_FACTOR(valid);
+              FW_ASSERT(
+                  valid.e == Fw::ParamValid::VALID || valid.e == Fw::ParamValid::DEFAULT,
+                  valid.e
+              );
+              this->log_ACTIVITY_HI_FACTOR_UPDATED(val);
+              break;
+          }
+          default:
+              FW_ASSERT(0, id);
+              break;
+      }
+  }
+
 } // end namespace MathModule
