@@ -50,12 +50,16 @@ namespace MathModule {
         const FwOpcodeType opCode,
         const U32 cmdSeq,
         F32 val1,
-        MathModule::MathOp op,
+        MathOp op,
         F32 val2
     )
   {
-    // TODO
-    this->cmdResponse_out(opCode,cmdSeq,Fw::CmdResponse::OK);
+    this->tlmWrite_VAL1(val1);
+    this->tlmWrite_OP(op);
+    this->tlmWrite_VAL2(val2);
+    this->log_ACTIVITY_LO_COMMAND_RECV(val1, op, val2);
+    this->mathOpOut_out(0, val1, op, val2);
+    this->cmdResponse_out(opCode, cmdSeq, Fw::CmdResponse::OK);
   }
 
 } // end namespace MathModule
