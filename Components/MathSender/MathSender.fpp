@@ -1,60 +1,90 @@
 module MathModule {
-    @ Active component used for sending operations and operrands to the MathReceiver.
-    active component MathSender {
 
-        # One async command/port is required for active components
-        # This should be overridden by the developers with a useful command/port
-        @ TODO
-        async command TODO opcode 0
+  @ Component for sending a math operation
+  active component MathSender {
 
-        ##############################################################################
-        #### Uncomment the following examples to start customizing your component ####
-        ##############################################################################
+    # ----------------------------------------------------------------------
+    # General ports
+    # ----------------------------------------------------------------------
 
-        # @ Example async command
-        # async command COMMAND_NAME(param_name: U32)
+    @ Port for sending the operation request
+    output port mathOpOut: OpRequest
 
-        # @ Example telemetry counter
-        # telemetry ExampleCounter: U64
+    @ Port for receiving the result
+    async input port mathResultIn: MathResult
 
-        # @ Example event
-        # event ExampleStateEvent(example_state: Fw.On) severity activity high id 0 format "State set to {}"
+    # ----------------------------------------------------------------------
+    # Special ports
+    # ----------------------------------------------------------------------
 
-        # @ Example port: receiving calls from the rate group
-        # sync input port run: Svc.Sched
+    @ Command receive port
+    command recv port cmdIn
 
-        # @ Example parameter
-        # param PARAMETER_NAME: U32
+    @ Command registration port
+    command reg port cmdRegOut
 
-        ###############################################################################
-        # Standard AC Ports: Required for Channels, Events, Commands, and Parameters  #
-        ###############################################################################
-        @ Port for requesting the current time
-        time get port timeCaller
+    @ Command response port
+    command resp port cmdResponseOut
 
-        @ Port for sending command registrations
-        command reg port cmdRegOut
+    @ Event port
+    event port eventOut
 
-        @ Port for receiving commands
-        command recv port cmdIn
+    @ Telemetry port
+    telemetry port tlmOut
 
-        @ Port for sending command responses
-        command resp port cmdResponseOut
+    @ Text event port
+    text event port textEventOut
 
-        @ Port for sending textual representation of events
-        text event port logTextOut
+    @ Time get port
+    time get port timeGetOut
 
-        @ Port for sending events to downlink
-        event port logOut
+    # ----------------------------------------------------------------------
+    # Commands
+    # ----------------------------------------------------------------------
 
-        @ Port for sending telemetry channels to downlink
-        telemetry port tlmOut
+    @ Do a math operation
+    async command DO_MATH(
+                           val1: F32 @< The first operand
+                           op: MathOp @< The operation
+                           val2: F32 @< The second operand
+                         )
 
-        @ Port to return the value of a parameter
-        param get port prmGetOut
+    # ----------------------------------------------------------------------
+    # Events
+    # ----------------------------------------------------------------------
 
-        @Port to set the value of a parameter
-        param set port prmSetOut
+    @ Math command received
+    event COMMAND_RECV(
+                        val1: F32 @< The first operand
+                        op: MathOp @< The operation
+                        val2: F32 @< The second operand
+                      ) \
+      severity activity low \
+      format "Math command received: {f} {} {f}"
 
-    }
+    @ Received math result
+    event RESULT(
+                  result: F32 @< The math result
+                ) \
+      severity activity high \
+      format "Math result is {f}"
+
+    # ----------------------------------------------------------------------
+    # Telemetry
+    # ----------------------------------------------------------------------
+
+    @ The first value
+    telemetry VAL1: F32
+
+    @ The operation
+    telemetry OP: MathOp
+
+    @ The second value
+    telemetry VAL2: F32
+
+    @ The result
+    telemetry RESULT: F32
+
+  }
+
 }
