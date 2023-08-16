@@ -36,11 +36,48 @@ namespace MathModule {
     mathOpIn_handler(
         const NATIVE_INT_TYPE portNum,
         F32 val1,
-        const MathModule::MathOp &op,
+        const MathOp& op,
         F32 val2
     )
   {
-    // TODO
+      // Get the initial result
+      F32 res = 0.0;
+      switch (op.e) {
+          case MathOp::ADD:
+              res = val1 + val2;
+              break;
+          case MathOp::SUB:
+              res = val1 - val2;
+              break;
+          case MathOp::MUL:
+              res = val1 * val2;
+              break;
+          case MathOp::DIV:
+              res = val1 / val2;
+              break;
+          default:
+              FW_ASSERT(0, op.e);
+              break;
+      }//end switch
+
+      // Get the factor value
+      Fw::ParamValid valid;
+      F32 factor = paramGet_FACTOR(valid);
+      FW_ASSERT(
+          valid.e == Fw::ParamValid::VALID || valid.e == Fw::ParamValid::DEFAULT,
+          valid.e
+      );
+
+      // Multiply result by factor
+      res *= factor;
+
+      // Emit telemetry and events
+      this->log_ACTIVITY_HI_OPERATION_PERFORMED(op);
+      this->tlmWrite_OPERATION(op);
+
+      // Emit result
+      this->mathResultOut_out(0, res);
+
   }
 
   void MathReceiver ::
