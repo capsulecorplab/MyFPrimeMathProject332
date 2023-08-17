@@ -41,6 +41,8 @@ module MathDeployment {
     instance rateGroupDriver
     instance textLogger
     instance systemResources
+    instance mathSender
+    instance mathReceiver
 
     # ----------------------------------------------------------------------
     # Pattern graph specifiers
