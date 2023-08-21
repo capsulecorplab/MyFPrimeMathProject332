@@ -4,9 +4,9 @@
 
 #include "Tester.hpp"
 
-TEST(Nominal, ToDo) {
+TEST(Nominal, AddCommand) {
     MathModule::Tester tester;
-    tester.toDo();
+    tester.testAddCommand();
 }
 
 int main(int argc, char **argv) {
