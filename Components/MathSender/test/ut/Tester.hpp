@@ -42,9 +42,7 @@ namespace MathModule {
       // Tests
       // ----------------------------------------------------------------------
 
-      //! To do
-      //!
-      void toDo();
+      void testDoMath(MathOp op);
 
     private:
 
