@@ -43,6 +43,7 @@ namespace MathModule {
       // ----------------------------------------------------------------------
 
       void testDoMath(MathOp op);
+      void testAddCommand();
 
     private:
 
