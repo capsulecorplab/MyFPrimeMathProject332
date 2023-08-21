@@ -19,3 +19,9 @@ set(SOURCE_FILES
 # )
 
 register_fprime_module()
+
+set(UT_SOURCE_FILES
+  "${CMAKE_CURRENT_LIST_DIR}/MathSender.fpp"
+)
+set(UT_AUTO_HELPERS ON)
+register_fprime_ut()
