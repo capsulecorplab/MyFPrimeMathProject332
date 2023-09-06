@@ -1,0 +1,45 @@
+// ======================================================================
+// \title  MathSender.cpp
+// \author kasm-user
+// \brief  cpp file for MathSender component implementation class
+// ======================================================================
+
+
+#include <Components/MathSender/MathSender.hpp>
+#include <FpConfig.hpp>
+
+namespace MathModule {
+
+  // ----------------------------------------------------------------------
+  // Construction, initialization, and destruction
+  // ----------------------------------------------------------------------
+
+  MathSender ::
+    MathSender(
+        const char *const compName
+    ) : MathSenderComponentBase(compName)
+  {
+
+  }
+
+  MathSender ::
+    ~MathSender()
+  {
+
+  }
+
+  // ----------------------------------------------------------------------
+  // Command handler implementations
+  // ----------------------------------------------------------------------
+
+  void MathSender ::
+    TODO_cmdHandler(
+        const FwOpcodeType opCode,
+        const U32 cmdSeq
+    )
+  {
+    // TODO
+    this->cmdResponse_out(opCode,cmdSeq,Fw::CmdResponse::OK);
+  }
+
+} // end namespace MathModule
