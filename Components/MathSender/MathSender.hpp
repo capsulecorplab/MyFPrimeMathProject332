@@ -34,14 +34,38 @@ namespace MathModule {
     PRIVATE:
 
       // ----------------------------------------------------------------------
+      // Handler implementations for user-defined typed input ports
+      // ----------------------------------------------------------------------
+
+      //! Handler implementation for mathResultIn
+      //!
+      void mathResultIn_handler(
+          const NATIVE_INT_TYPE portNum, /*!< The port number*/
+          F32 result /*!< 
+      the result of the operation
+      */
+      );
+
+    PRIVATE:
+
+      // ----------------------------------------------------------------------
       // Command handler implementations
       // ----------------------------------------------------------------------
 
-      //! Implementation for TODO command handler
-      //! TODO
-      void TODO_cmdHandler(
+      //! Implementation for DO_MATH command handler
+      //! Do a math operation
+      void DO_MATH_cmdHandler(
           const FwOpcodeType opCode, /*!< The opcode*/
-          const U32 cmdSeq /*!< The command sequence number*/
+          const U32 cmdSeq, /*!< The command sequence number*/
+          F32 val1, /*!< 
+          The first operand
+          */
+          MathModule::MathOp op, /*!< 
+          The operation
+          */
+          F32 val2 /*!< 
+          The second operand
+          */
       );
 
 
