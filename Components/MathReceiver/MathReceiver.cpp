@@ -29,21 +29,35 @@ namespace MathModule {
   }
 
   // ----------------------------------------------------------------------
+  // Handler implementations for user-defined typed input ports
+  // ----------------------------------------------------------------------
+
+  void MathReceiver ::
+    mathOpIn_handler(
+        const NATIVE_INT_TYPE portNum,
+        F32 val1,
+        const MathModule::MathOp &op,
+        F32 val2
+    )
+  {
+    // TODO
+  }
+
+  void MathReceiver ::
+    schedIn_handler(
+        const NATIVE_INT_TYPE portNum,
+        NATIVE_UINT_TYPE context
+    )
+  {
+    // TODO
+  }
+
+  // ----------------------------------------------------------------------
   // Command handler implementations
   // ----------------------------------------------------------------------
 
   void MathReceiver ::
-    TODO_1_cmdHandler(
-        const FwOpcodeType opCode,
-        const U32 cmdSeq
-    )
-  {
-    // TODO
-    this->cmdResponse_out(opCode,cmdSeq,Fw::CmdResponse::OK);
-  }
-
-  void MathReceiver ::
-    TODO_2_cmdHandler(
+    CLEAR_EVENT_THROTTLE_cmdHandler(
         const FwOpcodeType opCode,
         const U32 cmdSeq
     )
