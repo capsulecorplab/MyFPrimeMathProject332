@@ -1,63 +1,106 @@
 module MathModule {
-    @ Queued component for receiving messages from MathSender
-    queued component MathReceiver {
 
-        # One sync and one async command/port are required for queued components
-        # This should be overridden by the developers with useful commands/ports
-        @ TODO
-        async command TODO_1 opcode 0
+  @ Component for receiving and performing a math operation
+  queued component MathReceiver {
 
-        @ TODO
-        sync command TODO_2
+    # ----------------------------------------------------------------------
+    # General ports
+    # ----------------------------------------------------------------------
 
-        ##############################################################################
-        #### Uncomment the following examples to start customizing your component ####
-        ##############################################################################
+    @ Port for receiving the math operation
+    async input port mathOpIn: OpRequest
 
-        # @ Example async command
-        # async command COMMAND_NAME(param_name: U32)
+    @ Port for returning the math result
+    output port mathResultOut: MathResult
 
-        # @ Example telemetry counter
-        # telemetry ExampleCounter: U64
+    @ The rate group scheduler input
+    sync input port schedIn: Svc.Sched
 
-        # @ Example event
-        # event ExampleStateEvent(example_state: Fw.On) severity activity high id 0 format "State set to {}"
+    # ----------------------------------------------------------------------
+    # Special ports
+    # ----------------------------------------------------------------------
 
-        # @ Example port: receiving calls from the rate group
-        # sync input port run: Svc.Sched
+    @ Command receive
+    command recv port cmdIn
 
-        # @ Example parameter
-        # param PARAMETER_NAME: U32
+    @ Command registration
+    command reg port cmdRegOut
 
-        ###############################################################################
-        # Standard AC Ports: Required for Channels, Events, Commands, and Parameters  #
-        ###############################################################################
-        @ Port for requesting the current time
-        time get port timeCaller
+    @ Command response
+    command resp port cmdResponseOut
 
-        @ Port for sending command registrations
-        command reg port cmdRegOut
+    @ Event
+    event port eventOut
 
-        @ Port for receiving commands
-        command recv port cmdIn
+    @ Parameter get
+    param get port prmGetOut
 
-        @ Port for sending command responses
-        command resp port cmdResponseOut
+    @ Parameter set
+    param set port prmSetOut
 
-        @ Port for sending textual representation of events
-        text event port logTextOut
+    @ Telemetry
+    telemetry port tlmOut
 
-        @ Port for sending events to downlink
-        event port logOut
+    @ Text event
+    text event port textEventOut
 
-        @ Port for sending telemetry channels to downlink
-        telemetry port tlmOut
+    @ Time get
+    time get port timeGetOut
 
-        @ Port to return the value of a parameter
-        param get port prmGetOut
+    # ----------------------------------------------------------------------
+    # Parameters
+    # ----------------------------------------------------------------------
 
-        @Port to set the value of a parameter
-        param set port prmSetOut
+    @ The multiplier in the math operation
+    param FACTOR: F32 default 1.0 id 0 \
+      set opcode 10 \
+      save opcode 11
 
-    }
+    # ----------------------------------------------------------------------
+    # Events
+    # ----------------------------------------------------------------------
+
+    @ Factor updated
+    event FACTOR_UPDATED(
+                          val: F32 @< The factor value
+                        ) \
+      severity activity high \
+      id 0 \
+      format "Factor updated to {f}" \
+      throttle 3
+
+    @ Math operation performed
+    event OPERATION_PERFORMED(
+                               val: MathOp @< The operation
+                             ) \
+      severity activity high \
+      id 1 \
+      format "{} operation performed"
+
+    @ Event throttle cleared
+    event THROTTLE_CLEARED \
+      severity activity high \
+      id 2 \
+      format "Event throttle cleared"
+
+    # ----------------------------------------------------------------------
+    # Commands
+    # ----------------------------------------------------------------------
+
+    @ Clear the event throttle
+    async command CLEAR_EVENT_THROTTLE \
+      opcode 0
+
+    # ----------------------------------------------------------------------
+    # Telemetry
+    # ----------------------------------------------------------------------
+
+    @ The operation
+    telemetry OPERATION: MathOp id 0
+
+    @ Multiplication factor
+    telemetry FACTOR: F32 id 1
+
+  }
+
 }
