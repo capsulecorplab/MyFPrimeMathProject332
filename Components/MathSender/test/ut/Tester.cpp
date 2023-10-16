@@ -76,6 +76,12 @@ namespace MathModule {
       ASSERT_EVENTS_COMMAND_RECV(0, val1, op, val2);
     }
 
+  void Tester ::
+      testAddCommand()
+    {
+        this->testDoMath(MathOp::ADD);
+    }
+
   // ----------------------------------------------------------------------
   // Handlers for typed from ports
   // ----------------------------------------------------------------------
